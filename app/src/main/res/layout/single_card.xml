@@ -17,12 +17,8 @@
         android:layout_marginTop="8dp"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardBackgroundColor="#1296db"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        app:contentPadding="10dp"
+        app:contentPadding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView

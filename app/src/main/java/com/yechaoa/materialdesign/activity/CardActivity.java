@@ -9,42 +9,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.yechaoa.materialdesign.R;
 
-import butterknife.BindView;
-
-public class BookActivity extends AppCompatActivity {
-
-//public TextView single_book_title, single_book_description;
+public class CardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_book);
+        setContentView(R.layout.activity_card);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_card);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        TextView tv_book_title = (TextView) findViewById(R.id.tv_book_title);
-        TextView tv_book_description = (TextView)findViewById(R.id.tv_book_description);
-
-        // Todo: 从后端读取数据并改写内容
-        String title = "-Title-";
-        String description = "-Description-";
-        tv_book_title.setText(title);
-        tv_book_description.setText(description);
-        // 上面需要改
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fbtn_user);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fbtn_add_card);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Todo: 访问词卡用户的个人主页
-                Snackbar.make(view, "访问个人主页", Snackbar.LENGTH_LONG)
+                // Todo：写一个新页面，选择book让add进行添加（还未添加的book的列表）
+                Snackbar.make(view, "Add card to book", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -63,7 +47,7 @@ public class BookActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_settings:
-//                startActivity(new Intent(BookActivity.this,TabViewPagerScrollActivity.class));
+//                startActivity(new Intent(ScrollingActivity.this,TabViewPagerScrollActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

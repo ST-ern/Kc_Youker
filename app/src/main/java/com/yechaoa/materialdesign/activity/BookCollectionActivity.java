@@ -1,5 +1,6 @@
 package com.yechaoa.materialdesign.activity;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +18,14 @@ import com.yechaoa.materialdesign.utils.AnalysisUtils;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class BookCollectionActivity extends ToolbarActivity implements View.OnClickListener {
+public class BookCollectionActivity extends ToolbarActivity {
 
     @BindView(R.id.rv_book_list)
     RecyclerView rv_book_list;
     @BindView(R.id.btn_create_book)
-    Button btn_create_book;
+    FloatingActionButton btn_create_book;
 
     BookAdapter bookAdapter;
     ArrayList<BookItem> books;
@@ -50,7 +52,6 @@ public class BookCollectionActivity extends ToolbarActivity implements View.OnCl
         userName = userName = AnalysisUtils.readLoginUserName(this);
         //Todo:看看userName是什么
 
-        btn_create_book.setOnClickListener(this);
     }
 
 
@@ -90,12 +91,8 @@ public class BookCollectionActivity extends ToolbarActivity implements View.OnCl
         return booksArray ;
     }
 
-    @Override public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_create_book:
-                bookAdapter.addData(books.size());
-            default:
-                break;
-        }
+    @OnClick(R.id.btn_create_book)
+    public void onClick() {
+        bookAdapter.addData(books.size());
     }
 }
