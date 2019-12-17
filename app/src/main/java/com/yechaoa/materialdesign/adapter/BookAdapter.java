@@ -58,7 +58,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookHolder> {
                 //打开具体的书本页面
                 Toast.makeText(c,"Open Book", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(c, BookActivity.class);
-                intent.putExtra("title", book_title);
+                intent.putExtra("book_title", book_title);
 //                intent.putExtra("cover", bytes);
                 c.startActivity(intent);
             }

@@ -21,7 +21,7 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@+id/toolbar_card">
 
             <!--
             scroll ：想要触发滑动事件，必须要加上这个属性，不加最后会停在顶端，比如Tablayout
@@ -40,23 +40,6 @@
             pin ：固定模式，在折叠的时候最后固定在顶端
             parallax ：视差模式，在折叠的时候会有个视差折叠的效果。
             -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="130dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_card_name"
-                    android:textSize="30sp"
-                    android:text="Title"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
-
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>

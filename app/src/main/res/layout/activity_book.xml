@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,77 +7,63 @@
     android:layout_height="match_parent"
     tools:context=".activity.BookActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_book"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout_book"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
-
-            <!--
-            scroll ：想要触发滑动事件，必须要加上这个属性，不加最后会停在顶端，比如Tablayout
-            exitUntilCollapsed ：表示滑动到最后折叠在顶端
-            enterAlways ：表示向上滑动消失，向下滑动可见
-            -->
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_book"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
-            <!--
-            pin ：固定模式，在折叠的时候最后固定在顶端
-            parallax ：视差模式，在折叠的时候会有个视差折叠的效果。
-            -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="140dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_book_title"
-                    android:textSize="30sp"
-                    android:text="Title"
-                    android:textColor="@color/white"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:id="@+id/tv_book_description"
-                    android:textSize="18sp"
-                    android:text="This is a description"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_scrolling_book"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fbtn_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_user_page"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_toolbar" />
 
 
-</android.support.design.widget.CoordinatorLayout>
+<!--    <android.support.design.widget.AppBarLayout-->
+<!--        android:id="@+id/app_bar_book"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/app_bar_height"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        android:theme="@style/AppTheme.AppBarOverlay">-->
+
+<!--        <android.support.design.widget.CollapsingToolbarLayout-->
+<!--            android:id="@+id/toolbar_layout_book"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:fitsSystemWindows="true"-->
+<!--            app:contentScrim="?attr/colorPrimary"-->
+<!--            app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
+<!--            app:toolbarId="@+id/toolbar_book">-->
+
+<!--            &lt;!&ndash;-->
+<!--            scroll ：想要触发滑动事件，必须要加上这个属性，不加最后会停在顶端，比如Tablayout-->
+<!--            exitUntilCollapsed ：表示滑动到最后折叠在顶端-->
+<!--            enterAlways ：表示向上滑动消失，向下滑动可见-->
+<!--            &ndash;&gt;-->
+
+<!--            <android.support.v7.widget.Toolbar-->
+<!--                android:id="@+id/toolbar_book"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                app:layout_collapseMode="pin"-->
+<!--                app:popupTheme="@style/AppTheme.PopupOverlay"/>-->
+
+<!--            &lt;!&ndash;-->
+<!--            pin ：固定模式，在折叠的时候最后固定在顶端-->
+<!--            parallax ：视差模式，在折叠的时候会有个视差折叠的效果。-->
+<!--            &ndash;&gt;-->
+
+
+<!--        </android.support.design.widget.CollapsingToolbarLayout>-->
+
+<!--    </android.support.design.widget.AppBarLayout>-->
+
+    <include
+        layout="@layout/content_scrolling_book"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+<!--    <android.support.design.widget.FloatingActionButton-->
+<!--        android:id="@+id/fbtn_user"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/fab_margin"-->
+<!--        app:layout_anchor="@id/app_bar_book"-->
+<!--        app:layout_anchorGravity="bottom|end"-->
+<!--        app:srcCompat="@drawable/ic_user_page"/>-->
+
+
+</android.support.constraint.ConstraintLayout>

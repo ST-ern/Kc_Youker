@@ -118,6 +118,11 @@ public class MainActivity extends ToolbarActivity {
             //if (!TextUtils.isEmpty(userName)){
             Toast.makeText(MainActivity.this,"登陆成功："+ userName, Toast.LENGTH_SHORT).show();
 
+            if(userName==null){
+                //跳转到登陆界面
+                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                startActivityForResult(intent,1);
+            }
         }
         mViewPager.getAdapter().notifyDataSetChanged();
     }

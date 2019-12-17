@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yechaoa.materialdesign.R;
+import com.yechaoa.materialdesign.activity.CardActivity;
 import com.yechaoa.materialdesign.holder.CardHolder;
 import com.yechaoa.materialdesign.model.Card.CardItem;
 import com.yechaoa.materialdesign.model.Card.CardItemClickListener;
@@ -55,10 +56,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
 //                byte[] bytes = stream.toByteArray();
 
                 //Todo:进入单独卡的界面
-//                Intent intent = new Intent(c, CardActivity.class);
-//                intent.putExtra("name", card_name);
-////                intent.putExtra("cover", bytes);
-//                c.startActivity(intent);
+                Intent intent = new Intent(c, CardActivity.class);
+                intent.putExtra("card_name", card_name);
+//                intent.putExtra("cover", bytes);
+                c.startActivity(intent);
             }
         });
     }
