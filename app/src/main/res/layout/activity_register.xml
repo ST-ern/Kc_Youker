@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_name_register"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorPrimary">
+        app:passwordToggleTint="@color/k_lightRed">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_password_register"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorPrimary">
+        app:passwordToggleTint="@color/k_lightRed">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"

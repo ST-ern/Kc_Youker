@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent">
 
 
     <android.support.v7.widget.CardView
@@ -16,7 +18,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardBackgroundColor="#1296db"
+        app:cardBackgroundColor="@color/k_lightRed"
         app:contentPadding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,11 +28,12 @@
         <TextView
             android:id="@+id/tv_card_name"
             android:layout_width="match_parent"
+            android:minWidth="300dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/card_view"
             android:textSize="18sp"
-            android:textColor="#fff"/>
+            android:textColor="@color/text_white"/>
 
     </android.support.v7.widget.CardView>
 

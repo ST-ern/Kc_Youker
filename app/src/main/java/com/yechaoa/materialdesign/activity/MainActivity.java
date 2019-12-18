@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
 import com.yechaoa.materialdesign.R;
-import com.yechaoa.materialdesign.fragment.Fragment1;
+import com.yechaoa.materialdesign.fragment.FragmentTranslate;
 import com.yechaoa.materialdesign.fragment.FragmentHome;
 import com.yechaoa.materialdesign.fragment.FragmentMe;
 
@@ -23,6 +23,8 @@ public class MainActivity extends ToolbarActivity {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
+    String userName;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -30,7 +32,7 @@ public class MainActivity extends ToolbarActivity {
 
     @Override
     protected void setToolbar() {
-        mToolbar.setTitle(R.string.tab_layout);
+        mToolbar.setTitle(userName);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class MainActivity extends ToolbarActivity {
 
         private String tabTitles[] = new String[]{"Trans", "Home", "Me"};
         // Todo：设置对应的Fragment（修改名字）
-        private Fragment[] mFragment = new Fragment[]{new Fragment1(), new FragmentHome(), new FragmentMe()};
+        private Fragment[] mFragment = new Fragment[]{new FragmentTranslate(), new FragmentHome(), new FragmentMe()};
 
         private SimpleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -114,7 +116,7 @@ public class MainActivity extends ToolbarActivity {
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data!=null){
-            String userName = data.getStringExtra("userName");
+            userName = data.getStringExtra("userName");
             //if (!TextUtils.isEmpty(userName)){
             Toast.makeText(MainActivity.this,"登陆成功："+ userName, Toast.LENGTH_SHORT).show();
 

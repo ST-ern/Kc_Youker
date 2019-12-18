@@ -25,7 +25,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:text="Log In"
-            android:textColor="@android:color/black"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:text="There is nothing, please login first."
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_gray"
             android:textSize="10sp" />
 
     </LinearLayout>
@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/black" />
+        android:background="@color/text_gray" />
 
 
     <RelativeLayout
@@ -69,7 +69,7 @@
             android:layout_marginLeft="25dp"
             android:layout_toRightOf="@id/iv_book_collection_icon"
             android:text="Books Collection"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_gray"
             android:textSize="16sp" />
         <ImageView
             android:layout_width="15dp"
@@ -83,7 +83,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/black" />
+        android:background="@color/text_gray" />
 
 
     <RelativeLayout
@@ -106,7 +106,7 @@
             android:layout_marginLeft="25dp"
             android:layout_toRightOf="@id/iv_userInfo_icon"
             android:text="Setting"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_gray"
             android:textSize="16sp" />
         <ImageView
             android:layout_width="15dp"
@@ -120,7 +120,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/black" />
+        android:background="@color/text_gray" />
 
     </LinearLayout>
 

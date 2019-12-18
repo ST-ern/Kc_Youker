@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="15dp"
-            android:background="@android:color/black" />
+            android:background="@color/text_gray" />
 
         <RelativeLayout
             android:id="@+id/rl_modify_psw"
@@ -39,7 +39,7 @@
                 android:layout_marginLeft="25dp"
                 android:drawablePadding="10dp"
                 android:text="Modify Password"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_gray"
                 android:textSize="16sp"/>
             <ImageView
                 android:layout_width="15dp"
@@ -52,7 +52,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/black" />
+            android:background="@color/text_gray" />
 
         <RelativeLayout
             android:id="@+id/rl_modify_description"
@@ -67,7 +67,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="25dp"
                 android:text="Modify Description"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_gray"
                 android:textSize="16sp" />
             <ImageView
                 android:layout_width="15dp"
@@ -80,13 +80,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/black" />
+            android:background="@color/text_gray" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="15dp"
-            android:background="@android:color/black" />
+            android:background="@color/text_gray" />
 
         <RelativeLayout
             android:id="@+id/rl_exit_login"
@@ -102,14 +102,14 @@
                 android:layout_marginLeft="25dp"
                 android:drawablePadding="10dp"
                 android:text="Exit"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_gray"
                 android:textSize="16sp"/>
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/black" />
+            android:background="@color/text_gray" />
 
     </LinearLayout>
 
