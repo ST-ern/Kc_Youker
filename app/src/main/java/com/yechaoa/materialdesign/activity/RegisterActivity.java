@@ -13,20 +13,25 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 import com.yechaoa.materialdesign.R;
+import com.yechaoa.materialdesign.model.dao.Constant;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 import butterknife.BindView;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class RegisterActivity extends ToolbarActivity implements View.OnClickListener{
 
     boolean add_success = true;
+    String userName;
+    String psw;
+    public static final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
 
     @BindView(R.id.til_name_register)
     TextInputLayout mTilName_register;
@@ -86,8 +91,8 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
                 Toast.makeText(this, "Register Success", Toast.LENGTH_SHORT).show();
 
                 //获得用户名和两次密码
-                String userName = mTilName_register.getEditText().getText().toString().trim();
-                String psw = mTilPassword_register.getEditText().getText().toString().trim();
+                userName = mTilName_register.getEditText().getText().toString().trim();
+                psw = mTilPassword_register.getEditText().getText().toString().trim();
                 String pswAgain = mTilPassword_register_again.getEditText().getText().toString().trim();
 
 
@@ -107,11 +112,11 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
                     /** *从SharedPreferences中读取输入的用户名，判断SharedPreferences中是否有此用户名 */
                     // Todo: SharedPreferences换成从数据库（后端）读取
                 }else{
-                    addUserInfo(userName, psw);
+                    addUserInfo();
                     if(!add_success){
                         Toast.makeText(RegisterActivity.this, "This username is used.", Toast.LENGTH_SHORT).show();
                         return;
-                    }else{
+                    } else {
                         Toast.makeText(RegisterActivity.this, "Succeed!", Toast.LENGTH_SHORT).show();
                         //把账号、密码和账号标识保存到sp里面
                         /** * 保存账号和密码到SharedPreferences中 */
@@ -139,7 +144,7 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
     // Todo: 改成：SharedPreferences换成从数据库（后端）读取
 
     /** * 从SharedPreferences中读取输入的用户名，将用户信息插入，如果插入成功返回true，插入失败返回false重新输入 */
-    private void addUserInfo(String userName, String psw){
+    private void addUserInfo(){
 //        boolean has_userName= false;
 
 //        mode_private SharedPreferences sp = getSharedPreferences( );
@@ -177,18 +182,54 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
 //        }).start();
 
 
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                HashMap<String,String> paramsMap=new HashMap<>();
+                paramsMap.put("password", psw);
+                paramsMap.put("name", userName);
 
-        SharedPreferences sp=getSharedPreferences("loginInfo", MODE_PRIVATE);
-        //获取密码
-        String spPsw=sp.getString(userName, "");
+
+                paramsMap.put("id","1");
+
+                Gson gson=new Gson();
+                String data=gson.toJson(paramsMap);
+
+
+                RequestBody formBody;
+                formBody=RequestBody.create(JSON, data);
+                Request request=new Request.Builder().url(Constant.ADD).post(formBody).build();
+
+                try (Response response = okHttpClient.newCall(request).execute()) {
+                    Looper.prepare();
+                    String answer = response.body().string();
+                    Boolean t;
+                    if(answer.equals("1")) {
+                        t = true;
+                    } else {
+                        t = false;
+                    }
+                    add_success = t;
+                    Looper.loop();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+//        SharedPreferences sp = getSharedPreferences("loginInfo", MODE_PRIVATE);
+//        //获取密码
+//        String spPsw=sp.getString(userName, "");
         // 传入用户名获取密码
         // 如果密码不为空则确实保存过这个用户名，不可注册
 
-        if(!TextUtils.isEmpty(spPsw)) {
-            add_success = false;
-        } else {
-            add_success = true;
-        }
+//        if(!TextUtils.isEmpty(spPsw)) {
+//            add_success = false;
+//        } else {
+//            add_success = true;
+//        }
     }
 
     private void saveRegisterInfo(String userName,String psw){
