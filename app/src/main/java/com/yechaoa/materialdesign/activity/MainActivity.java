@@ -54,10 +54,10 @@ public class MainActivity extends ToolbarActivity {
         //关联viewpager
         mTabLayout.setupWithViewPager(mViewPager);
         //设置图标
-        //Todo:修改layout底部的图标
-        mTabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher); //第一个Tab
-        mTabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher); //第二个Tab
-        mTabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher); //第三个Tab
+//        //修改layout底部的图标
+//        mTabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher); //第一个Tab
+//        mTabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher); //第二个Tab
+//        mTabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher); //第三个Tab
         //设置默认选中
         mTabLayout.getTabAt(2).select();
         //设置监听
@@ -82,7 +82,7 @@ public class MainActivity extends ToolbarActivity {
     private class SimpleFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
         private String tabTitles[] = new String[]{"Trans", "Home", "Me"};
-        // Todo：设置对应的Fragment（修改名字）
+        // 设置对应的Fragment（修改名字）
         private Fragment[] mFragment = new Fragment[]{new FragmentTranslate(), new FragmentHome(), new FragmentMe()};
 
         private SimpleFragmentPagerAdapter(FragmentManager fm) {

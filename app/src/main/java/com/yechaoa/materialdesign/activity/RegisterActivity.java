@@ -87,7 +87,7 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_register_over:
-                //Todo:注册成功的处理，跳回登陆界面
+                //注册成功的处理，跳回登陆界面
                 Toast.makeText(this, "Register Success", Toast.LENGTH_SHORT).show();
 
                 //获得用户名和两次密码
@@ -110,29 +110,34 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
                     Toast.makeText(RegisterActivity.this, "Different passwords.", Toast.LENGTH_SHORT).show();
                     return;
                     /** *从SharedPreferences中读取输入的用户名，判断SharedPreferences中是否有此用户名 */
-                    // Todo: SharedPreferences换成从数据库（后端）读取
+                    //SharedPreferences换成从数据库（后端）读取
                 }else{
-                    addUserInfo();
-                    if(!add_success){
-                        Toast.makeText(RegisterActivity.this, "This username is used.", Toast.LENGTH_SHORT).show();
-                        return;
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "Succeed!", Toast.LENGTH_SHORT).show();
-                        //把账号、密码和账号标识保存到sp里面
-                        /** * 保存账号和密码到SharedPreferences中 */
-                        // Todo: SharedPreferences换成存入数据库，向后端传数据
+                    new Thread(new Runnable(){
+                        @Override
+                        public void run() {
+                            addUserInfo();
+                            if (!add_success) {
+                                Toast.makeText(RegisterActivity.this, "This username is used.", Toast.LENGTH_SHORT).show();
+                                return;
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Succeed!", Toast.LENGTH_SHORT).show();
+                                //把账号、密码和账号标识保存到sp里面
+                                /** * 保存账号和密码到SharedPreferences中 */
+                                //SharedPreferences换成存入数据库，向后端传数据
 
-                        saveRegisterInfo(userName, psw);
-                        //注册成功后把账号传递到LoginActivity.java中
-                        // 返回值到loginActivity显示
-                        Intent data = new Intent();
-                        data.putExtra("userName", userName);
-                        setResult(RESULT_OK, data);
-                        //RESULT_OK为Activity系统常量，状态码为-1，
-                        // 表示此页面下的内容操作成功将data返回到上一页面，如果是用back返回过去的则不存在用setResult传递data值
-                        add_success=false;
-                        RegisterActivity.this.finish();
-                    }
+                                saveRegisterInfo(userName, psw);
+                                //注册成功后把账号传递到LoginActivity.java中
+                                // 返回值到loginActivity显示
+                                Intent data = new Intent();
+                                data.putExtra("userName", userName);
+                                setResult(RESULT_OK, data);
+                                //RESULT_OK为Activity系统常量，状态码为-1，
+                                // 表示此页面下的内容操作成功将data返回到上一页面，如果是用back返回过去的则不存在用setResult传递data值
+                                add_success = false;
+                                RegisterActivity.this.finish();
+                            }
+                        }
+                    }).start();
                 }
 
                 break;
@@ -141,7 +146,7 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
     }
 
 
-    // Todo: 改成：SharedPreferences换成从数据库（后端）读取
+    //改成：SharedPreferences换成从数据库（后端）读取
 
     /** * 从SharedPreferences中读取输入的用户名，将用户信息插入，如果插入成功返回true，插入失败返回false重新输入 */
     private void addUserInfo(){
@@ -182,9 +187,9 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
 //        }).start();
 
 
-        new Thread(new Runnable(){
-            @Override
-            public void run() {
+//        new Thread(new Runnable(){
+//            @Override
+//            public void run() {
                 OkHttpClient okHttpClient = new OkHttpClient();
                 HashMap<String,String> paramsMap=new HashMap<>();
                 paramsMap.put("password", psw);
@@ -211,12 +216,17 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
                         t = false;
                     }
                     add_success = t;
-                    Looper.loop();
+
+
+
+//                    Looper.loop();
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-        }).start();
+//            }
+//        }).start();
 
 
 //        SharedPreferences sp = getSharedPreferences("loginInfo", MODE_PRIVATE);

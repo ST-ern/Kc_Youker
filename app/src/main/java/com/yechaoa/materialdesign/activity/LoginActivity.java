@@ -2,6 +2,7 @@ package com.yechaoa.materialdesign.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Looper;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -12,9 +13,16 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.yechaoa.materialdesign.R;
+import com.yechaoa.materialdesign.model.dao.Constant;
 import com.yechaoa.materialdesign.utils.AnalysisUtils;
 
+import java.io.IOException;
+
 import butterknife.BindView;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import com.google.gson.*;
 
 public class LoginActivity extends ToolbarActivity implements View.OnClickListener{
 
@@ -29,6 +37,10 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
     Button btnLogin;
     @BindView(R.id.btn_register)
     Button btnRegister;
+
+    String userName;
+    String psw;
+    String  password;
 
     @Override
     protected int getLayoutId() {
@@ -76,12 +88,12 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                //Todo:登陆的处理
+                //登陆的处理
                 Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
 
                 //获得用户名和密码
-                String userName = mTilName.getEditText().getText().toString().trim();
-                String psw = mTilPassword.getEditText().getText().toString().trim();
+                userName = mTilName.getEditText().getText().toString().trim();
+                psw = mTilPassword.getEditText().getText().toString().trim();
 
                 if(TextUtils.isEmpty(userName)){
                     Toast.makeText(LoginActivity.this, "Please enter your username.", Toast.LENGTH_SHORT).show();
@@ -90,35 +102,72 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
                     Toast.makeText(LoginActivity.this, "Please enter password.", Toast.LENGTH_SHORT).show();
                     return;
                 }else {
-                    //Todo:通过userName查询后端有无账号和密码，得到密码password
-                    String password = readPsw(userName);
-                    if(TextUtils.isEmpty(password)) {
-                        password = " ";
-                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                    //在界面保存登录的用户名 定义个方法 saveLoginStatus boolean 状态 , userName 用户名;
-                    saveLoginStatus(true, userName);
+                            //通过userName查询后端有无账号和密码，得到密码password
 
-                    if(psw.equals(password)) {
-                        //密码相同，登陆成功
-                        //宣布成功
-                        Toast.makeText(LoginActivity.this, "Succeed log in!", Toast.LENGTH_SHORT).show();
-                        //登录成功后关闭此页面进入主页
-                        Intent data=new Intent();
-                        //data.putExtra( ); name , value ;
-                        data.putExtra("isLogin",true);
-                        data.putExtra("userName",userName);
-                        // 表示此页面下的内容操作成功将data返回到上一页面，如果是用back返回过去的则不存在用setResult传递data值
-                        setResult(RESULT_OK,data);
-                        //销毁登录界面
-                        LoginActivity.this.finish();
-                    }else {
-                        Toast.makeText(this, "Incorrect Info", Toast.LENGTH_SHORT).show();
-                    }
+                            String url = Constant.LISTUSERBYNAME + "/" + userName;
+                            OkHttpClient okHttpClient = new OkHttpClient();
+                            Request request = new Request.Builder()
+                                    .url(url)
+                                    .build();
+
+
+                            try (Response response = okHttpClient.newCall(request).execute()) {
+                                Looper.prepare();
+
+                                String answer = response.body().string();
+
+                                JsonParser parser = new JsonParser();
+                                JsonElement json = parser.parse(answer);
+                                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                                String temp=gson.toJson(json);
+                                JsonArray jsonArray=parser.parse(temp).getAsJsonArray();
+
+                                JsonObject jsonObject=jsonArray.get(0).getAsJsonObject();
+                                password = jsonObject.get("password").getAsString();
+
+//                                answer = " ";
+                                //将answer（json）中的password提取出来
+//                            String password = readPsw(userName);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                            if (TextUtils.isEmpty(password)) {
+                                password = " ";
+                            }
+
+                            //在界面保存登录的用户名 定义个方法 saveLoginStatus boolean 状态 , userName 用户名;
+                            saveLoginStatus(true, userName);
+
+                            if (psw.equals(password)) {
+                                //密码相同，登陆成功
+                                //宣布成功
+                                Toast.makeText(LoginActivity.this, "Succeed log in!", Toast.LENGTH_SHORT).show();
+                                //登录成功后关闭此页面进入主页
+                                Intent data = new Intent();
+                                //data.putExtra( ); name , value ;
+                                data.putExtra("isLogin", true);
+                                data.putExtra("userName", userName);
+                                // 表示此页面下的内容操作成功将data返回到上一页面，如果是用back返回过去的则不存在用setResult传递data值
+                                setResult(RESULT_OK, data);
+                                //销毁登录界面
+                                LoginActivity.this.finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Incorrect Info", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }).start();
                 }
                 break;
             case R.id.btn_register:
-                //Todo:跳转到注册界面
+                //跳转到注册界面
                 Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
 
                 //跳转等待结果
@@ -132,14 +181,14 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
 
 
     /** *从SharedPreferences中根据用户名读取密码 */
-    //Todo：改成后端操作
+    //改成后端操作
     private String readPsw(String userName){
         SharedPreferences sp=getSharedPreferences("loginInfo", MODE_PRIVATE);
         return sp.getString(userName , "");
     }
 
     /** *保存登录状态和登录用户名到SharedPreferences中 */
-    //Todo：改成后端操作
+    //改成后端操作
     private void saveLoginStatus(boolean status,String userName){
         //saveLoginStatus(true, userName);
         // loginInfo表示文件名 SharedPreferences sp=getSharedPreferences("loginInfo", MODE_PRIVATE);
