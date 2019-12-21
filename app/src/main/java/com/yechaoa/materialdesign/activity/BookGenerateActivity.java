@@ -55,7 +55,6 @@ public class BookGenerateActivity extends ToolbarActivity implements View.OnClic
     @Override
     protected void initView(){
         userName = AnalysisUtils.readLoginUserName(this);
-
         btn_title.setOnClickListener(this);
     }
 

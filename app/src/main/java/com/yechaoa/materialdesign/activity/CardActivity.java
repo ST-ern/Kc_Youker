@@ -1,21 +1,38 @@
 package com.yechaoa.materialdesign.activity;
 
 import android.content.Intent;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.yechaoa.materialdesign.R;
+import com.yechaoa.materialdesign.model.dao.Constant;
+
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class CardActivity extends AppCompatActivity {
 
     String title;
+    String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +52,66 @@ public class CardActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(title);
 
 
-        // Todo: 填充卡的内容:从后端读取content
-        String content = " This is content. ";
-        TextView tv_card_content = findViewById(R.id.tv_card_content);
-        tv_card_content.setText(content);
+        // 填充卡的内容:从后端读取content
+//
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                //通过userName查询后端有无账号和密码，得到密码password
+
+                String url = Constant.FINDCARDBYNAME + "/" + title;
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+
+
+                try (Response response = okHttpClient.newCall(request).execute()) {
+                    Looper.prepare();
+
+                    String answer = response.body().string();
+
+                    JsonParser parser = new JsonParser();
+                    JsonElement json = parser.parse(answer);
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String temp=gson.toJson(json);
+                    JsonArray jsonArray=parser.parse(temp).getAsJsonArray();
+
+                    JsonObject jsonObject=jsonArray.get(0).getAsJsonObject();
+                    description = jsonObject.get("discribe").getAsString();
+
+//                                answer = " ";
+                    //将answer（json）中的password提取出来
+//                            String password = readPsw(userName);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            TextView tv_card_content = findViewById(R.id.tv_card_content);
+                            tv_card_content.setText(description);
+
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+
+
+//        String content = " This is content. ";
+//        TextView tv_card_content = findViewById(R.id.tv_card_content);
+//        tv_card_content.setText(content);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fbtn_add_card);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            // Todo：写一个新页面，选择book让add进行添加（还未添加的book的列表）
+            // 写一个新页面，选择book让add进行添加（还未添加的book的列表）
             Snackbar.make(view, "Add card to book", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
             //打开新页面并传递数据

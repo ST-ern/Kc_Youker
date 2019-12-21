@@ -4,5 +4,6 @@ import android.view.View;
 
 public interface CardItemClickListener {
     void onCardItemClickListener(View v, int position);
+    void onCardItemDeleteClickListener(View v, int position);
 
 }

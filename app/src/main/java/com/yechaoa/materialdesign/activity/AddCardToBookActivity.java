@@ -57,7 +57,7 @@ public class AddCardToBookActivity extends ToolbarActivity  {
         addBookList.setAdapter(addBookAdapter);
 
         userName = userName = AnalysisUtils.readLoginUserName(this);
-        //Todo:看看userName是什么
+        //看看userName是什么
 
 
     }
@@ -66,7 +66,7 @@ public class AddCardToBookActivity extends ToolbarActivity  {
     private ArrayList<AddBookItem> getMyList() {
         ArrayList<AddBookItem> addBooksArray = new ArrayList<>();
 
-        //Todo:通过搜索内容query从后端数据库读取词卡信息
+        //通过搜索内容query从后端数据库读取词卡信息
         AddBookItem addBook = new AddBookItem();
         addBook.setAdd_book_title("A");
         addBooksArray.add(addBook);

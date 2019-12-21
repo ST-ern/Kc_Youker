@@ -32,7 +32,7 @@ public abstract class ToolbarActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        //mToolbar.inflateMenu(R.menu.menu_toolbar);
+//        mToolbar.inflateMenu(R.menu.menu_toolbar);
         //自定义返回键icon
         //mToolbar.setNavigationIcon(R.drawable.ic_back);
 
@@ -65,13 +65,13 @@ public abstract class ToolbarActivity extends AppCompatActivity {
                 //Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
                 finish();
                 return true;
-            case R.id.menu_share:
-                Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
+            case R.id.menu_settings:
+                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
-                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "---", Toast.LENGTH_SHORT).show();
                 return super.onOptionsItemSelected(item);
         }
     }

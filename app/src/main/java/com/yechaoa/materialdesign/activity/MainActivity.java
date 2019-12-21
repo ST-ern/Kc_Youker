@@ -1,12 +1,14 @@
 package com.yechaoa.materialdesign.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
 import android.widget.Toast;
 
 import com.yechaoa.materialdesign.R;
@@ -24,6 +26,12 @@ public class MainActivity extends ToolbarActivity {
     ViewPager mViewPager;
 
     String userName;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_empty_toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected int getLayoutId() {

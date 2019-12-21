@@ -2,19 +2,34 @@ package com.yechaoa.materialdesign.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.yechaoa.materialdesign.R;
+import com.yechaoa.materialdesign.adapter.BookAdapter;
 import com.yechaoa.materialdesign.adapter.CardAdapter;
+import com.yechaoa.materialdesign.model.Book.BookItem;
 import com.yechaoa.materialdesign.model.Card.CardItem;
+import com.yechaoa.materialdesign.model.dao.Constant;
+import com.yechaoa.materialdesign.utils.AnalysisUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class BookActivity extends ToolbarActivity {
 
@@ -27,6 +42,9 @@ public class BookActivity extends ToolbarActivity {
 
     CardAdapter cardAdapter;
     ArrayList<CardItem> cards = new ArrayList<>();
+    ArrayList<CardItem> cardsArray = new ArrayList<>();
+    String userName;
+    String title;
 
     @Override
     protected int getLayoutId() {
@@ -42,22 +60,81 @@ public class BookActivity extends ToolbarActivity {
 
         // 从Intent获得book_title
         Bundle bundle = getIntent().getExtras();
-        String title = bundle.getString("book_title");
+        title = bundle.getString("book_title");
         if(title==null){ title = "No found."; }
+        userName = AnalysisUtils.readLoginUserName(this);
+
 
         // Todo: 从后端读取数据并改写内容
-        String description = "-Description-";
+//        String description = "-Description-";
         mToolbar.setTitle(title);
-        tv_book_description.setText(description);
+//        tv_book_description.setText(description);
         // 上面需要改
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        cardList.setLayoutManager(layoutManager); // create a recyclerView in a LinearView
 
-        cards = getMyListByBook(title);
-        cardAdapter=new CardAdapter(this, cards);
-        cardList.setAdapter(cardAdapter);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String url = Constant.LISTCARDBYBAG + "/" + userName + "/" + title;
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+
+
+                try (Response response = okHttpClient.newCall(request).execute()) {
+                    Looper.prepare();
+
+                    String answer = response.body().string();
+
+                    JsonParser parser = new JsonParser();
+                    JsonElement json = parser.parse(answer);
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String temp = gson.toJson(json);
+                    JsonArray jsonArray = parser.parse(temp).getAsJsonArray();
+
+                    for(int i=0; i<jsonArray.size(); i++){
+                        JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                        final String cardName = jsonObject.get("name").getAsString();
+                        CardItem card = new CardItem();
+                        card.setCard_name(cardName);
+                        cardsArray.add(card);
+                    }
+
+                    cards = cardsArray;
+
+//                        final String result = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final LinearLayoutManager layoutManager = new LinearLayoutManager(BookActivity.this);
+                            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                            cardList.setLayoutManager(layoutManager); // create a recyclerView in a LinearView
+
+//                            cards = getMyListByBook(title);
+                            cardAdapter=new CardAdapter(BookActivity.this, cards, title);
+                            cardList.setAdapter(cardAdapter);
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+
+
+
+
+//        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        cardList.setLayoutManager(layoutManager); // create a recyclerView in a LinearView
+//
+//        cards = getMyListByBook(title);
+//        cardAdapter=new CardAdapter(this, cards);
+//        cardList.setAdapter(cardAdapter);
 
     }
 
@@ -127,7 +204,7 @@ public class BookActivity extends ToolbarActivity {
     private ArrayList<CardItem> getMyListByBook(String title) {
         ArrayList<CardItem> cardsArray = new ArrayList<>();
 
-        //Todo:通过Book的名字从后端数据库读取词卡信息
+        //通过Book的名字从后端数据库读取词卡信息
         CardItem card = new CardItem();
         card.setCard_name(title);
         cardsArray.add(card);
@@ -149,22 +226,21 @@ public class BookActivity extends ToolbarActivity {
 
 
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Toast.makeText(this, "back-to-home", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
+                finish();
                 return true;
-            case R.id.menu_share:
-                Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
+            case R.id.menu_settings:
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(this,ModifyBookDescriptionActivity.class);
+                intent.putExtra("bookTitle", title);
+                startActivityForResult(intent, 1);
                 return true;
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show();
-                //Todo：开启卡包设置页面，修改description
-                Intent intent=new Intent(BookActivity.this, BookGenerateActivity.class);
-                startActivityForResult(intent,1);
                 return super.onOptionsItemSelected(item);
         }
     }

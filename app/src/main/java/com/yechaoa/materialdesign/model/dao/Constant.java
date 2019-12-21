@@ -6,6 +6,9 @@ public class Constant {
     public final static String ADDUSER = BASE_URL+"insertUser";
     public final static String LISTBAGBYNAME = BASE_URL + "ListBagByname";
     public final static String INSERTBOOK = BASE_URL + "Bag/insert";
+    public final static String LISTCARDBYBAG = BASE_URL + "ListCardByBag";
+    public final static String FINDCARDBYNAME = BASE_URL+"FindCardByname";
+    public final static String FINDCARDBYWORD = BASE_URL+"FindCardByword";
 //    public final static String GET = BASE_URL+"get";
 //    public final static String GETALL = BASE_URL+"getAll";
     public final static String DELETEBOOK = BASE_URL+"bag/delete";

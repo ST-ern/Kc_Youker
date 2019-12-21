@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -41,6 +42,12 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
     String userName;
     String psw;
     String  password;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_empty_toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected int getLayoutId() {

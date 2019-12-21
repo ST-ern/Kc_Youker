@@ -1,5 +1,6 @@
 package com.yechaoa.materialdesign.activity;
 
+import android.os.Looper;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -17,15 +18,28 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.yechaoa.materialdesign.R;
 import com.yechaoa.materialdesign.adapter.BookAdapter;
 import com.yechaoa.materialdesign.adapter.CardAdapter;
+import com.yechaoa.materialdesign.adapter.SearchCardAdapter;
 import com.yechaoa.materialdesign.model.Book.BookItem;
 import com.yechaoa.materialdesign.model.Card.CardItem;
+import com.yechaoa.materialdesign.model.SearchCard.SearchCardItem;
+import com.yechaoa.materialdesign.model.dao.Constant;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class SearchActivity extends ToolbarActivity {
 
@@ -34,8 +48,9 @@ public class SearchActivity extends ToolbarActivity {
     @BindView(R.id.tv_search_result)
     RecyclerView mSearchResult;
 
-    CardAdapter cardAdapter;
-    ArrayList<CardItem> cards = new ArrayList<>();
+    SearchCardAdapter cardAdapter;
+    ArrayList<SearchCardItem> cards = new ArrayList<>();
+    ArrayList<SearchCardItem> cardsArray = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -52,7 +67,7 @@ public class SearchActivity extends ToolbarActivity {
         mSearchResult.setLayoutManager(new LinearLayoutManager(this)); // create a recyclerView in a LinearView
 
 //        cards = getMyList();
-        cardAdapter=new CardAdapter(this, cards);
+        cardAdapter=new SearchCardAdapter(this, cards);
         mSearchResult.setAdapter(cardAdapter);
 
     }
@@ -92,17 +107,78 @@ public class SearchActivity extends ToolbarActivity {
             public boolean onQueryTextSubmit(String query) {
                 Snackbar.make(mConstraintLayout, "搜索内容===" + query, Snackbar.LENGTH_SHORT).show();
 
+                final String search = query;
                 //伪搜索
                 mSearchResult.setVisibility(View.VISIBLE);
                 //Todo：真搜索，通过传给后端搜索的内容取得返回值
-                //当没有输入任何内容的时候清除结果
-                if (TextUtils.isEmpty(query)) {
-                    cards.clear();
-                    cardAdapter.updateData(cards);
-                } else{
-                    cardAdapter.updateData(getMyList(query));
-                }
-                cardAdapter.notifyDataSetChanged();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        String url = Constant.FINDCARDBYWORD + "/" + search;
+                        OkHttpClient okHttpClient = new OkHttpClient();
+                        Request request = new Request.Builder()
+                                .url(url)
+                                .build();
+
+
+                        try (Response response = okHttpClient.newCall(request).execute()) {
+                            Looper.prepare();
+
+                            String answer = response.body().string();
+
+                            JsonParser parser = new JsonParser();
+                            JsonElement json = parser.parse(answer);
+                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                            String temp = gson.toJson(json);
+                            JsonArray jsonArray = parser.parse(temp).getAsJsonArray();
+
+                            for(int i=0; i<jsonArray.size(); i++){
+                                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                                final String cardName = jsonObject.get("name").getAsString();
+                                SearchCardItem card = new SearchCardItem();
+                                card.setCard_name(cardName);
+                                cardsArray.add(card);
+                            }
+
+                            cards = cardsArray;
+
+//                        final String result = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    cardAdapter=new SearchCardAdapter(SearchActivity.this, cards);
+                                    mSearchResult.setAdapter(cardAdapter);
+
+                                    //当没有输入任何内容的时候清除结果
+                                    if (TextUtils.isEmpty(search)) {
+                                        cards.clear();
+                                        cardAdapter.updateData(cards);
+                                    }
+
+                                    cardAdapter.notifyDataSetChanged();
+                                }
+                            });
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }).start();
+
+
+
+//                //当没有输入任何内容的时候清除结果
+//                if (TextUtils.isEmpty(search)) {
+//                    cards.clear();
+//                    cardAdapter.updateData(cards);
+//                }
+////                else{
+////                    cardAdapter.updateData(getMyList(query));
+////                }
+//                cardAdapter.notifyDataSetChanged();
 
                 //清除焦点，收软键盘
                 //mSearchView.clearFocus();
@@ -130,24 +206,24 @@ public class SearchActivity extends ToolbarActivity {
     }
 
 
-    private ArrayList<CardItem> getMyList(String query) {
+    private ArrayList<SearchCardItem> getMyList(String query) {
 
-        ArrayList<CardItem> cardsArray = new ArrayList<>();
+        ArrayList<SearchCardItem> cardsArray = new ArrayList<>();
 
-        //Todo:通过搜索内容query从后端数据库读取词卡信息
-        CardItem card = new CardItem();
+        //通过搜索内容query从后端数据库读取词卡信息
+        SearchCardItem card = new SearchCardItem();
         card.setCard_name(query);
         cardsArray.add(card);
 
-        card = new CardItem();
+        card = new SearchCardItem();
         card.setCard_name("Abuse");
         cardsArray.add(card);
 
-        card = new CardItem();
+        card = new SearchCardItem();
         card.setCard_name("Attend");
         cardsArray.add(card);
 
-        card = new CardItem();
+        card = new SearchCardItem();
         card.setCard_name("Alike");
         cardsArray.add(card);
 
