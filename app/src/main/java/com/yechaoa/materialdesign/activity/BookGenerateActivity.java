@@ -68,7 +68,7 @@ public class BookGenerateActivity extends ToolbarActivity implements View.OnClic
                     title = til_book_title.getEditText().getText().toString().trim();
                     description = til_book_description.getEditText().getText().toString().trim();
 
-                    //Todo:将description传到后端
+                    //将description传到后端
                     Toast.makeText(this, "Description Ok", Toast.LENGTH_SHORT).show();
 
                     new Thread(new Runnable() {
@@ -98,7 +98,7 @@ public class BookGenerateActivity extends ToolbarActivity implements View.OnClic
                                     t = false;
                                 }
                                 final Boolean add_success = t;
-                                //Todo:同名卡包添加失败的显示
+                                //同名卡包添加失败的显示
 
                                 BookGenerateActivity.this.runOnUiThread(new Runnable() {
                                     @Override

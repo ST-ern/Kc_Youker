@@ -94,18 +94,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookHolder> {
     public void addData(int position) {
 //        BookItem book = new BookItem();
 //        book.setBook_title("Default");
-        //Todo：调用一个新界面CreateBook，在那个界面具体设置title
-        // 在Book页面设置按钮进入modify页面修改description
+        //调用一个新界面CreateBook，在那个界面具体设置title
+        //在Book页面设置按钮进入modify页面修改description
 
 //        books.add(position, book);
         notifyItemInserted(position);
 //        notifyItemChanged(position);
-        //Todo: 通知后端添加一个Book，信息为book的内容
+        //通知后端添加一个Book，信息为book的内容
     }
 
     public void removeData(int position) {
 
-        //Todo:通知后端删除一个Book，信息为books[position]
+        //通知后端删除一个Book，信息为books[position]
 
         final String title = books.get(position).getBook_title();
         final int count = position;
