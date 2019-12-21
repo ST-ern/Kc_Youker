@@ -204,7 +204,7 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
 
                 RequestBody formBody;
                 formBody=RequestBody.create(JSON, data);
-                Request request=new Request.Builder().url(Constant.ADD).post(formBody).build();
+                Request request=new Request.Builder().url(Constant.ADDUSER).post(formBody).build();
 
                 try (Response response = okHttpClient.newCall(request).execute()) {
                     Looper.prepare();

@@ -139,7 +139,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.ll_head:
                 if (AnalysisUtils.readLoginStatus(getActivity())){
-                    //跳转到个人资料界面
+                    //Todo:跳转到个人资料界面or别的什么
                 }else {
                     //跳转到登录界面
                     Intent intent = new Intent(getActivity(), LoginActivity.class);

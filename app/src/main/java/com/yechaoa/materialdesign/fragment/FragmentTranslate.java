@@ -74,7 +74,7 @@ public class FragmentTranslate extends Fragment {
                 String raw = et_translate.getText().toString().trim();
                 Toast.makeText(getActivity(), raw, Toast.LENGTH_LONG).show();
 
-                //Todo：返回的翻译文本魏Response，是一个经过prettify函数转化为字符串的翻译结果
+                //返回的翻译文本魏Response，是一个经过prettify函数转化为字符串的翻译结果
                 try {
                     String response = Post(raw);
                     translate_result = prettify(response);

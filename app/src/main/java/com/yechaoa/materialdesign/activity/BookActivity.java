@@ -1,17 +1,12 @@
 package com.yechaoa.materialdesign.activity;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yechaoa.materialdesign.R;
 import com.yechaoa.materialdesign.adapter.CardAdapter;
@@ -150,5 +145,27 @@ public class BookActivity extends ToolbarActivity {
         cardsArray.add(card);
 
         return cardsArray ;
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Toast.makeText(this, "back-to-home", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_share:
+                Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show();
+                //Todo：开启卡包设置页面，修改description
+                Intent intent=new Intent(BookActivity.this, BookGenerateActivity.class);
+                startActivityForResult(intent,1);
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
