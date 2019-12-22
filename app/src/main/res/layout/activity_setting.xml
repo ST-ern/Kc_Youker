@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
     tools:context=".activity.SettingActivity">
 
 
@@ -15,6 +16,7 @@
 
     <LinearLayout
         app:layout_constraintTop_toBottomOf="@id/include"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -32,21 +34,30 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
+            <ImageView
+                android:id="@+id/iv_modify_user_password"
+                android:src="@drawable/icon_password"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/iv_modify_user_password"
+                android:layout_marginStart="25dp"
                 android:drawablePadding="10dp"
                 android:text="Modify Password"
                 android:textColor="@color/text_gray"
                 android:textSize="16sp"/>
             <ImageView
+                android:src="@drawable/icon_next"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:paddingRight="25dp" />
+                android:paddingEnd="25dp" />
         </RelativeLayout>
 
         <View
@@ -61,20 +72,30 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
+            <ImageView
+                android:id="@+id/iv_modify_user_description"
+                android:src="@drawable/icon_description"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
+                android:drawablePadding="10dp"
+                android:layout_toRightOf="@id/iv_modify_user_description"
                 android:text="Modify Description"
                 android:textColor="@color/text_gray"
                 android:textSize="16sp" />
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_alignParentRight="true"
+                android:src="@drawable/icon_next"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:paddingRight="25dp" />
+                android:paddingEnd="25dp" />
         </RelativeLayout>
 
         <View
@@ -85,7 +106,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="55dp"
             android:background="@color/text_gray" />
 
         <RelativeLayout
@@ -95,12 +116,20 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
+            <ImageView
+                android:id="@+id/iv_exit"
+                android:src="@drawable/icon_exit"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:drawablePadding="10dp"
+                android:layout_toRightOf="@id/iv_exit"
                 android:text="Exit"
                 android:textColor="@color/text_gray"
                 android:textSize="16sp"/>

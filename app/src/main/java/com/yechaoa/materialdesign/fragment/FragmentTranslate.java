@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +49,7 @@ public class FragmentTranslate extends Fragment {
     private EditText et_translate;
     private TextView tv_translate_result;
     private String translate_result;
-    private Button btn_text_translate, btn_copy_result;
+    private ImageButton btn_text_translate, btn_copy_result;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_translate, null);
@@ -65,8 +66,8 @@ public class FragmentTranslate extends Fragment {
 
         et_translate=(EditText)view.findViewById(R.id.translateBlock);
         tv_translate_result = (TextView)view.findViewById(R.id.tv_translate_result);
-        btn_text_translate=(Button)view.findViewById(R.id.btn_text_translate);
-        btn_copy_result = (Button)view.findViewById(R.id.btn_copy_result);
+        btn_text_translate=(ImageButton)view.findViewById(R.id.btn_text_translate);
+        btn_copy_result = (ImageButton)view.findViewById(R.id.btn_copy_result);
 
         btn_text_translate.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

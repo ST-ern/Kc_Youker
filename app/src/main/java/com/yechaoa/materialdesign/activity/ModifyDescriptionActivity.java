@@ -52,7 +52,7 @@ public class ModifyDescriptionActivity extends ToolbarActivity implements View.O
     private void submit() {
         String description = til_description.getEditText().getText().toString().trim();
 
-        //Todo:将description传到后端
+        //Todo:将userName, description传到后端
         Toast.makeText(this, "Description Ok", Toast.LENGTH_SHORT).show();
 
         ModifyDescriptionActivity.this.finish();

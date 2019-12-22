@@ -15,10 +15,15 @@
 
     <color name="text_white">#EBEBEB</color>
     <color name="text_darkRed">#9d3e3e</color>
-    <color name="text_gray">#84897c</color>
+    <color name="text_gray">#707070</color>
     <color name="k_lightYellow">#fcf9ea</color>
     <color name="k_darkYellow">#dcd8ca</color>
-    <color name="k_lightRed">#d69790</color>
+    <color name="k_lightRed">#ca5c54</color>
     <color name="k_darkRed">#a8504d</color>
     <color name="k_greenBlue">#379684</color>
+    <color name="k_red_transparent">#31BE3737</color>
+    <color name="k_white_transparent">#31FFFFFF</color>
+    <color name="k_gray_transparent">#6D999999</color>
+    <color name="k_button_gray">#CCA19E</color>
+    <color name="k_button_red">#E2BCB9</color>
 </resources>

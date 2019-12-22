@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
     tools:context=".activity.BookGenerateActivity">
 
     <include
@@ -17,7 +18,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Title"
+        android:hint=" Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
@@ -25,6 +26,7 @@
         app:passwordToggleTint="@color/k_lightRed">
 
         <android.support.design.widget.TextInputEditText
+            android:drawableStart="@drawable/icon_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/MyEditText" />
@@ -38,7 +40,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Description"
+        android:hint=" Description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_book_title"
@@ -46,6 +48,7 @@
         app:passwordToggleTint="@color/k_lightRed">
 
         <android.support.design.widget.TextInputEditText
+            android:drawableStart="@drawable/icon_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="100dp"
@@ -61,6 +64,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:background="@drawable/selector_button"
+        android:textColor="@color/text_white"
+
         android:text="BOOK GENERATE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

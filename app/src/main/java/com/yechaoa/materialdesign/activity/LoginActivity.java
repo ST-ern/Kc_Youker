@@ -56,7 +56,7 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
 
     @Override
     protected void setToolbar() {
-        mToolbar.setTitle(R.string.login);
+        mToolbar.setTitle("LOGIN");
     }
 
     @Override

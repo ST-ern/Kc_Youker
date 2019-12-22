@@ -54,9 +54,10 @@ public class SettingActivity extends ToolbarActivity implements View.OnClickList
                 startActivity(intent);
                 break;
             case R.id.rl_modify_description:
-                //Todo:Modify description
+                //Modify description
                 Toast.makeText(this,"修改简介",Toast.LENGTH_SHORT).show();
-
+                Intent anotherIntent=new Intent(SettingActivity.this,ModifyDescriptionActivity.class);
+                startActivity(anotherIntent);
                 break;
             case R.id.rl_exit_login:  //退出登录，即清除登录状态
                 Toast.makeText(this,"Exit succeed!",Toast.LENGTH_SHORT).show();

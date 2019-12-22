@@ -7,70 +7,154 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_translate_input">
+
+            <EditText
             android:id="@+id/translateBlock"
             android:layout_width="fill_parent"
-            android:layout_height="80dp"
+            android:layout_height="130dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginRight="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
             android:width="300dp"
             android:height="200dp"
-            android:hint="..."/>
+            android:textColor="@color/text_white"
+            android:hint="Input Something..."
+            android:textColorHint="@color/text_white"/>
 
-        <Button
-            android:id="@+id/btn_text_translate"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="35dp"
-            android:text="Translate"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@color/k_white_transparent">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btn_text_translate"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:src="@drawable/selector_bottom_translate"
+                        android:background="@color/transparent"
+                        android:textColor="@color/text_white"
+                        android:layout_gravity="center_horizontal"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Translate"
+                        android:textSize="7sp"
+                        android:textColor="@color/text_white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btn_camera"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:src="@drawable/selector_bottom_camera"
+                        android:background="@color/transparent"
+                        android:textColor="@color/text_white"
+                        android:layout_gravity="center_horizontal"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Camera"
+                        android:textSize="7sp"
+                        android:textColor="@color/text_white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btn_microphone"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/selector_bottom_microphone"
+                        android:background="@color/transparent"
+                        android:layout_height="32dp"
+                        android:textColor="@color/text_white"
+                        android:layout_gravity="center_horizontal"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Voice"
+                        android:textSize="7sp"
+                        android:textColor="@color/text_white"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="@drawable/bg_translate_result"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
-            android:background="@color/k_lightRed"/>
+            android:background="@color/k_greenBlue"/>
 
         <TextView
             android:id="@+id/tv_translate_result"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="35dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_white"
             android:textIsSelectable="true"
+            android:padding="5dp"
             android:textSize="18sp"/>
+
+            <ImageButton
+                android:id="@+id/btn_copy_result"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/selector_bottom_copy"
+                android:background="@color/transparent"
+                android:textColor="@color/text_white"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
-            android:background="@color/k_lightRed"/>
+            android:background="@color/k_greenBlue"/>
 
-        <Button
-            android:id="@+id/btn_copy_result"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="35dp"
-            android:text="Copy Translate Result"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+        </LinearLayout>
 
     </LinearLayout>
 
