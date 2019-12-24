@@ -2,6 +2,7 @@ package com.yechaoa.materialdesign.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Looper;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,10 +12,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.yechaoa.materialdesign.R;
+import com.yechaoa.materialdesign.model.dao.Constant;
 import com.yechaoa.materialdesign.utils.AnalysisUtils;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import butterknife.BindView;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ModifyPswActivity extends ToolbarActivity implements View.OnClickListener {
 
@@ -24,6 +35,8 @@ public class ModifyPswActivity extends ToolbarActivity implements View.OnClickLi
     TextInputLayout til_new_psw;
     @BindView(R.id.btn_modify_psw)
     Button btn_modify_psw;
+
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private String userName;
 
@@ -83,6 +96,56 @@ public class ModifyPswActivity extends ToolbarActivity implements View.OnClickLi
 
     //Todo:将修改后的新密码传到后端
     private void modifyPsw(String newPsw) {
+
+        final String psw = newPsw;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                HashMap<String, String> paramsMap = new HashMap<>();
+                paramsMap.put("password", psw);
+                paramsMap.put("name", userName);
+
+                Gson gson = new Gson();
+                String data = gson.toJson(paramsMap);
+
+
+                RequestBody formBody;
+                formBody = RequestBody.create(JSON, data);
+                Request request = new Request.Builder().url(Constant.UPDATEPSW).post(formBody).build();
+
+                try (Response response = okHttpClient.newCall(request).execute()) {
+                    Looper.prepare();
+                    final String answer = response.body().string();
+                    Boolean t;
+                    if (answer.equals("1")) {
+                        t = true;
+                    } else {
+                        t = false;
+                    }
+                    final Boolean add_success = t;
+                    //同名卡包添加失败的显示
+
+                    ModifyPswActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (add_success) {
+                                Toast.makeText(ModifyPswActivity.this, "Psw Ok", Toast.LENGTH_SHORT).show();
+                                ModifyPswActivity.this.finish();
+                            } else {
+                                Toast.makeText(ModifyPswActivity.this, "Modify False.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
         SharedPreferences sharedPreferences=getSharedPreferences("loginInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(userName,newPsw);

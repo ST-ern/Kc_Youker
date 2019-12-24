@@ -119,9 +119,6 @@ public class AddCardToBookActivity extends ToolbarActivity  {
 
             }
         }).start();
-
-
-
     }
 
 

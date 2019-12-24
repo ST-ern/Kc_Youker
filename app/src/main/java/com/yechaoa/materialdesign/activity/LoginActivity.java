@@ -157,6 +157,8 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
                                 //密码相同，登陆成功
                                 //宣布成功
                                 Toast.makeText(LoginActivity.this, "Succeed log in!", Toast.LENGTH_SHORT).show();
+                                // 保存用户名和密码
+                                saveUserInfo(userName, password);
                                 //登录成功后关闭此页面进入主页
                                 Intent data = new Intent();
                                 //data.putExtra( ); name , value ;
@@ -229,5 +231,18 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
             }
             data.putExtra("userName",userName);
         }
+    }
+
+
+    private void saveUserInfo(String userName,String psw){
+        // loginInfo表示文件名, mode_private SharedPreferences sp = getSharedPreferences();
+        SharedPreferences sp = getSharedPreferences("loginInfo", MODE_PRIVATE);
+        //获取编辑器， SharedPreferences.Editor editor -> sp.edit();
+        SharedPreferences.Editor editor=sp.edit();
+        //以用户名为key，密码为value保存在SharedPreferences中
+        // key,value,如键值对，editor.putString(用户名，密码）;
+        editor.putString(userName, psw);
+        //提交修改 editor.commit();
+        editor.commit();
     }
 }

@@ -33,7 +33,7 @@ public class CardActivity extends AppCompatActivity {
 
     String title;
     String description;
-    int star_count = 10;
+    int star_count = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,7 @@ public class CardActivity extends AppCompatActivity {
 
                     JsonObject jsonObject=jsonArray.get(0).getAsJsonObject();
                     description = jsonObject.get("discribe").getAsString();
+                    star_count = jsonObject.get("stars").getAsInt();
 
 //                                answer = " ";
                     //将answer（json）中的password提取出来
@@ -90,7 +91,15 @@ public class CardActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             TextView tv_card_content = findViewById(R.id.tv_card_content);
+                            TextView star = (TextView)findViewById(R.id.tv_star_count);
+
                             tv_card_content.setText(description);
+                            //star添加相应的数值，超过99显示"99+"
+                            if(star_count > 99) {
+                                star.setText("99+");
+                            } else {
+                                star.setText(String.valueOf(star_count));
+                            }
 
                         }
                     });
@@ -107,8 +116,8 @@ public class CardActivity extends AppCompatActivity {
 //        TextView tv_card_content = findViewById(R.id.tv_card_content);
 //        tv_card_content.setText(content);
 
-        TextView star = (TextView)findViewById(R.id.tv_star_count);
-        star.setText(String.valueOf(star_count));
+
+//        star.setText(String.valueOf(star_count));
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fbtn_add_card);
@@ -150,7 +159,9 @@ public class CardActivity extends AppCompatActivity {
         super.onResume();
         if(description != null) {
 //            bookAdapter.notifyItemChanged(books.size());
+
             Intent intent=new Intent(this, CardActivity.class);
+            intent.putExtra("card_name", title);
             startActivity(intent);
             this.finish();
         }

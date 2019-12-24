@@ -212,7 +212,7 @@ public class FragmentTranslate extends Fragment {
                     try {
                         String response = Post_Camera(imgParam);
                         //Todo:将response转化为字符串
-                        String temp = "-------Take a Picture------------";
+                        String temp = prettifyCamera(response);
                         et_translate.setText(temp);
                     } catch (Exception e) {
                         System.out.println(e);
@@ -254,6 +254,24 @@ public class FragmentTranslate extends Fragment {
                 .addHeader("Content-type", "application/x-www-form-urlencoded").build();
         Response response = client_camera.newCall(request).execute();
         return response.body().string();
+    }
+
+
+    public static String prettifyCamera(String json_text) {
+        JsonParser parser = new JsonParser();
+        JsonElement json = parser.parse(json_text);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String Response=gson.toJson(json);
+        JsonObject jsonObject = parser.parse(Response).getAsJsonObject();
+
+
+        JsonArray  OCRresult = jsonObject.get("words_result").getAsJsonArray();
+        String txt="";
+        for(int i=0;i<OCRresult.size();i++) {
+            txt += OCRresult.get(i).getAsJsonObject().get("words").getAsString();
+            txt+=" ";
+        }
+        return txt;
     }
 
 }

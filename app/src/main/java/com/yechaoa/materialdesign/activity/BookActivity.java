@@ -94,9 +94,12 @@ public class BookActivity extends ToolbarActivity {
                     String temp = gson.toJson(json);
                     JsonArray jsonArray = parser.parse(temp).getAsJsonArray();
 
-                    for(int i=0; i<jsonArray.size(); i++){
+                    JsonObject jsonObjectDescription = jsonArray.get(0).getAsJsonObject();
+                    final String des = jsonObjectDescription.get("body").getAsString();
+
+                    for(int i=1; i<jsonArray.size(); i++){
                         JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                        final String cardName = jsonObject.get("name").getAsString();
+                        final String cardName = jsonObject.get("body").getAsString();
                         CardItem card = new CardItem();
                         card.setCard_name(cardName);
                         cardsArray.add(card);
@@ -115,6 +118,8 @@ public class BookActivity extends ToolbarActivity {
 //                            cards = getMyListByBook(title);
                             cardAdapter=new CardAdapter(BookActivity.this, cards, title);
                             cardList.setAdapter(cardAdapter);
+
+                            tv_book_description.setText(des);
                         }
                     });
 
@@ -242,6 +247,19 @@ public class BookActivity extends ToolbarActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override public void onResume(){
+        super.onResume();
+        if(cardAdapter != null) {
+
+//            bookAdapter.notifyItemChanged(books.size());
+            Intent intent=new Intent(this, BookActivity.class);
+            intent.putExtra("book_title", title);
+            startActivity(intent);
+            this.finish();
+
         }
     }
 }
