@@ -12,5 +12,8 @@ public class Constant {
 //    public final static String GET = BASE_URL+"get";
 //    public final static String GETALL = BASE_URL+"getAll";
     public final static String DELETEBOOK = BASE_URL+"bag/delete";
+    public final static String LISTBAGWITHOUTCARD = BASE_URL+"ListBagWithoutCard";
+    public final static String INSERTCARD = BASE_URL+"Card/insert2bagName";
+
 //    public final static String MODIFY = BASE_URL+"modify";
 }

@@ -166,7 +166,7 @@ public class BookCollectionActivity extends ToolbarActivity {
 
     @OnClick(R.id.btn_create_book)
     public void onClick() {
-        // Todo：打开generate页面设置title
+        //打开generate页面设置title
         Intent intent=new Intent(this, BookGenerateActivity.class);
         startActivity(intent);
 //        bookAdapter.addData(books.size());

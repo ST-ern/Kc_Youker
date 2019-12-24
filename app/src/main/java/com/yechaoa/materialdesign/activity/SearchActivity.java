@@ -110,7 +110,7 @@ public class SearchActivity extends ToolbarActivity {
                 final String search = query;
                 //伪搜索
                 mSearchResult.setVisibility(View.VISIBLE);
-                //Todo：真搜索，通过传给后端搜索的内容取得返回值
+                //真搜索，通过传给后端搜索的内容取得返回值
 
                 new Thread(new Runnable() {
                     @Override
