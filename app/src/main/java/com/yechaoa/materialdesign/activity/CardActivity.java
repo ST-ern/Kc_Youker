@@ -33,6 +33,7 @@ public class CardActivity extends AppCompatActivity {
 
     String title;
     String description;
+    int star_count = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,9 @@ public class CardActivity extends AppCompatActivity {
 //        TextView tv_card_content = findViewById(R.id.tv_card_content);
 //        tv_card_content.setText(content);
 
+        TextView star = (TextView)findViewById(R.id.tv_star_count);
+        star.setText(String.valueOf(star_count));
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fbtn_add_card);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +143,16 @@ public class CardActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override public void onResume(){
+        super.onResume();
+        if(description != null) {
+//            bookAdapter.notifyItemChanged(books.size());
+            Intent intent=new Intent(this, CardActivity.class);
+            startActivity(intent);
+            this.finish();
         }
     }
 }
