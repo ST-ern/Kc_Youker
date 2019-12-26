@@ -96,6 +96,31 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/btn_album"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/selector_bottom_album"
+                        android:background="@color/transparent"
+                        android:layout_height="32dp"
+                        android:textColor="@color/text_white"
+                        android:layout_gravity="center_horizontal"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Album"
+                        android:textSize="7sp"
+                        android:textColor="@color/text_white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
                         android:id="@+id/btn_microphone"
                         android:layout_width="match_parent"
                         android:src="@drawable/selector_bottom_microphone"

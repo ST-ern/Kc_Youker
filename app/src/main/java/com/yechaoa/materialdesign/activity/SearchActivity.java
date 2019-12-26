@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -47,6 +48,8 @@ public class SearchActivity extends ToolbarActivity {
     ConstraintLayout mConstraintLayout;
     @BindView(R.id.tv_search_result)
     RecyclerView mSearchResult;
+    @BindView(R.id.iv_nothing_found)
+    ImageView ivNothing;
 
     SearchCardAdapter cardAdapter;
     ArrayList<SearchCardItem> cards = new ArrayList<>();
@@ -99,6 +102,8 @@ public class SearchActivity extends ToolbarActivity {
         EditText editText = (EditText) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         editText.setHintTextColor(ContextCompat.getColor(this, R.color.white));
         editText.setTextColor(ContextCompat.getColor(this, R.color.white));
+        //先不显示Nothing found 图案
+        ivNothing.setVisibility(View.INVISIBLE);
 
         // 设置搜索文本监听
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -155,9 +160,11 @@ public class SearchActivity extends ToolbarActivity {
                                     if (TextUtils.isEmpty(search)) {
                                         cards.clear();
                                         cardAdapter.updateData(cards);
+                                        ivNothing.setVisibility(View.INVISIBLE);
                                     }
 
                                     cardAdapter.notifyDataSetChanged();
+                                    ivNothing.setVisibility(View.VISIBLE);
                                 }
                             });
 
