@@ -206,6 +206,7 @@ public class SearchActivity extends ToolbarActivity {
 //
 //                cardAdapter.notifyDataSetChanged();
 ////                    mSearchResult.setVisibility(View.INVISIBLE);
+                ivNothing.setVisibility(View.INVISIBLE);
                 return false;
             }
         });

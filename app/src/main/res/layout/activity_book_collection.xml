@@ -26,9 +26,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_create_book"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
     </android.support.v7.widget.RecyclerView>
 
