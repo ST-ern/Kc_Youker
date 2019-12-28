@@ -103,7 +103,7 @@ public class AddCardToBookActivity extends ToolbarActivity  {
                         @Override
                         public void run() {
                             //debug
-                            Toast.makeText(AddCardToBookActivity.this, cardName, Toast.LENGTH_LONG).show();
+//                            Toast.makeText(AddCardToBookActivity.this, cardName, Toast.LENGTH_LONG).show();
 
                             addBookList.setLayoutManager(new LinearLayoutManager(AddCardToBookActivity.this)); // create a recyclerView in a LinearView
 

@@ -1,23 +1,34 @@
 package com.yechaoa.materialdesign.fragment;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,6 +42,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.yechaoa.materialdesign.R;
+import com.yechaoa.materialdesign.activity.MainActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,12 +60,17 @@ import okhttp3.Response;
 import static android.app.Activity.RESULT_OK;
 
 
-public class FragmentTranslate extends Fragment {
-    public static final int TAKE_PHOTO = 1;
+public class FragmentTranslate extends MyFragment {
+    private boolean isGetData = false;
+
+    public static final int TAKE_PHOTO = 121; // TakePhoto result number 121
+    public static final int CHOOSE_PHOTO = 212; // TakePhoto result number 121
 
     private Uri imageUri;
     private String imgStr;
     private String imgParam;
+
+    private boolean needRefresh = false;
 
     //okhttp
     private static String subscriptionKey = "a872995b97074a298f4adb299af2f121";
@@ -69,13 +86,15 @@ public class FragmentTranslate extends Fragment {
             .build();
 
 
-    private EditText et_translate;
+    public EditText et_translate;
+//    public EditText getEt_translate() {return et_translate;}
+
     private TextView tv_translate_result;
     private String translate_result;
-    private ImageButton btn_text_translate, btn_camera, btn_copy_result;
+    private ImageButton btn_text_translate, btn_camera, btn_album, btn_copy_result;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_translate, null);
+        View view=inflater.inflate(R.layout.fragment_translate, container, false);
 
         return view;
     }
@@ -92,6 +111,9 @@ public class FragmentTranslate extends Fragment {
         btn_text_translate=(ImageButton)view.findViewById(R.id.btn_text_translate);
         btn_copy_result = (ImageButton)view.findViewById(R.id.btn_copy_result);
         btn_camera = (ImageButton)view.findViewById(R.id.btn_camera);
+        btn_album = (ImageButton)view.findViewById(R.id.btn_album);
+
+        et_translate.setText("");
 
         btn_text_translate.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -137,10 +159,38 @@ public class FragmentTranslate extends Fragment {
             }
         });
 
+        btn_album.setOnClickListener(new View.OnClickListener(){
+            @Override public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
+                } else {
+                    openAlbum();
+                }
+//                File outputImage = new File(Environment.getExternalStorageDirectory(), "output_image.jpg");
+//                try {
+//                    if (outputImage.exists()) {
+//                        outputImage.delete();
+//                    }
+//                    outputImage.createNewFile();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                imageUri = Uri.fromFile(outputImage);
+//                Intent intent = new Intent("android.intent.action.GET_CONTENT");
+//                intent.setType("image/*");
+//                intent.putExtra("crop", true);
+//                intent.putExtra("scale", true);
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//                startActivityForResult(intent, CHOOSE_PHOTO);
+            }
+        });
+
 
         btn_copy_result.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 copyText(translate_result);
+//                et_translate.setText("");
             }
         });
 
@@ -221,18 +271,42 @@ public class FragmentTranslate extends Fragment {
 
                 }
                 break;
-//            case CHOOSE_PHOTO:
+            case CHOOSE_PHOTO:
 //                if (resultCode == RESULT_OK) {
-//                    // 判断手机系统版本号
-//                    if (Build.VERSION.SDK_INT >= 19) {
-//                        // 4.4及以上系统使用这个方法处理图片
-//                        handleImageOnKitKat(data);
-//                    } else {
-//                        // 4.4以下系统使用这个方法处理图片
-//                        handleImageBeforeKitKat(data);
+//                    ContentResolver resolver = getActivity().getContentResolver();
+//                    Uri originalUri = data.getData();   // 获得图片的uri
+//                    try {
+//                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+////                        picture.setImageBitmap(bitmap);
+//                        imgStr=bitmapToString(bitmap);
+//                        imgParam = URLEncoder.encode(imgStr, "UTF-8");
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    try {
+//                        String response = Post_Camera(imgParam);
+//                        //将response转化为字符串
+//                        String temp = prettifyCamera(response);
+//                        et_translate.setText(temp);
+//                    } catch (Exception e) {
+//                        System.out.println(e);
 //                    }
 //                }
 //                break;
+
+                if (resultCode == RESULT_OK) {
+                    // 判断手机系统版本号
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        // 4.4及以上系统使用这个方法处理图片
+                        handleImageOnKitKat(data);
+                    } else {
+                        // 4.4以下系统使用这个方法处理图片
+                        handleImageBeforeKitKat(data);
+                    }
+
+                }
+                break;
             default:
                 break;
         }
@@ -274,4 +348,105 @@ public class FragmentTranslate extends Fragment {
         return txt;
     }
 
+
+    private void openAlbum() {
+        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+        intent.setType("image/*");
+        startActivityForResult(intent, CHOOSE_PHOTO); // 打开相册
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openAlbum();
+                } else {
+                    Toast.makeText(getActivity(), "You denied the permission", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+        }
+    }
+
+    @TargetApi(19)
+    private void handleImageOnKitKat(Intent data) {
+        String imagePath = null;
+        Uri uri = data.getData();
+        Log.d("TAG", "handleImageOnKitKat: uri is " + uri);
+        if (DocumentsContract.isDocumentUri(getActivity(), uri)) {
+            // 如果是document类型的Uri，则通过document id处理
+            String docId = DocumentsContract.getDocumentId(uri);
+            if("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                String id = docId.split(":")[1]; // 解析出数字格式的id
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+                imagePath = getImagePath(contentUri, null);
+            }
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            // 如果是content类型的Uri，则使用普通方式处理
+            imagePath = getImagePath(uri, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            // 如果是file类型的Uri，直接获取图片路径即可
+            imagePath = uri.getPath();
+        }
+        displayImage(imagePath); // 根据图片路径显示图片
+    }
+
+    private void handleImageBeforeKitKat(Intent data) {
+        Uri uri = data.getData();
+        String imagePath = getImagePath(uri, null);
+        displayImage(imagePath);
+    }
+
+    private String getImagePath(Uri uri, String selection) {
+        String path = null;
+        // 通过Uri和selection来获取真实的图片路径
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+        }
+        return path;
+    }
+
+    private void displayImage(String imagePath) {
+        if (imagePath != null) {
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+                imgStr=bitmapToString(bitmap);
+                imgParam = URLEncoder.encode(imgStr, "UTF-8");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            picture.setImageBitmap(bitmap);
+
+            try {
+                String response = Post_Camera(imgParam);
+                //将response转化为字符串
+                String temp = prettifyCamera(response);
+                et_translate.setText(temp);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } else {
+            Toast.makeText(getActivity(), "failed to get image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override  public void onResume() {
+        super.onResume();
+        if(et_translate!=null && needRefresh) {
+            et_translate.setText("");
+            needRefresh = false;
+        }
+    }
+
+    @Override public void refresh() {
+        needRefresh = true;
+    }
 }

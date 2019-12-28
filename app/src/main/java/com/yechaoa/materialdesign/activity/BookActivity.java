@@ -240,7 +240,7 @@ public class BookActivity extends ToolbarActivity {
                 finish();
                 return true;
             case R.id.menu_settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this,ModifyBookDescriptionActivity.class);
                 intent.putExtra("bookTitle", title);
                 startActivityForResult(intent, 1);

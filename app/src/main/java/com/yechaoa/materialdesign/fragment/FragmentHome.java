@@ -13,7 +13,7 @@ import com.yechaoa.materialdesign.R;
 import com.yechaoa.materialdesign.activity.BookCollectionActivity;
 import com.yechaoa.materialdesign.activity.SearchActivity;
 
-public class FragmentHome extends Fragment implements View.OnClickListener{
+public class FragmentHome extends MyFragment implements View.OnClickListener{
 
     Button btn_search;
 
@@ -42,4 +42,5 @@ public class FragmentHome extends Fragment implements View.OnClickListener{
         }
     }
 
+    @Override public void refresh() {}
 }

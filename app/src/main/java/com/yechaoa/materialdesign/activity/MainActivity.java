@@ -15,6 +15,7 @@ import com.yechaoa.materialdesign.R;
 import com.yechaoa.materialdesign.fragment.FragmentTranslate;
 import com.yechaoa.materialdesign.fragment.FragmentHome;
 import com.yechaoa.materialdesign.fragment.FragmentMe;
+import com.yechaoa.materialdesign.fragment.MyFragment;
 
 import butterknife.BindView;
 
@@ -26,6 +27,7 @@ public class MainActivity extends ToolbarActivity {
     ViewPager mViewPager;
 
     String userName;
+    SimpleFragmentPagerAdapter adapter;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,6 +48,11 @@ public class MainActivity extends ToolbarActivity {
     @Override
     protected void initView() {
 
+//        userName = data.getStringExtra("userName");
+//        //if (!TextUtils.isEmpty(userName)){
+//        Toast.makeText(MainActivity.this,"登陆成功："+ userName, Toast.LENGTH_SHORT).show();
+
+
         //设置返回键不显示
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
@@ -57,7 +64,8 @@ public class MainActivity extends ToolbarActivity {
         startActivityForResult(intent,1);
 
         //设置adapter
-        final SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager());
+        adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager());
+
         mViewPager.setAdapter(adapter);
         //关联viewpager
         mTabLayout.setupWithViewPager(mViewPager);
@@ -73,6 +81,10 @@ public class MainActivity extends ToolbarActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 //选中
+//                if(mTabLayout.getTabAt(0) == tab)
+//                {
+//                    adapter.getItem(0).clean();
+//                }
             }
 
             @Override
@@ -87,18 +99,18 @@ public class MainActivity extends ToolbarActivity {
         });
     }
 
-    private class SimpleFragmentPagerAdapter extends FragmentStatePagerAdapter {
+    public class SimpleFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
         private String tabTitles[] = new String[]{"Trans", "Home", "Me"};
         // 设置对应的Fragment（修改名字）
-        private Fragment[] mFragment = new Fragment[]{new FragmentTranslate(), new FragmentHome(), new FragmentMe()};
+        public MyFragment[] mFragment = new MyFragment[]{new FragmentTranslate(), new FragmentHome(), new FragmentMe()};
 
         private SimpleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public MyFragment getItem(int position) {
             return mFragment[position];
         }
 
@@ -123,16 +135,18 @@ public class MainActivity extends ToolbarActivity {
     //检验是否能够获取用户的userName信息
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data!=null){
+        if (data!=null && requestCode==1){
             userName = data.getStringExtra("userName");
             //if (!TextUtils.isEmpty(userName)){
             Toast.makeText(MainActivity.this,"登陆成功："+ userName, Toast.LENGTH_SHORT).show();
 
             if(userName==null){
                 //跳转到登陆界面
+                adapter.getItem(0).refresh();
                 Intent intent=new Intent(MainActivity.this,LoginActivity.class);
                 startActivityForResult(intent,1);
             }
+
         }
         mViewPager.getAdapter().notifyDataSetChanged();
     }

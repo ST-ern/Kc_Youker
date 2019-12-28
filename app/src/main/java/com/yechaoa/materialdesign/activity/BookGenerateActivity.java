@@ -68,7 +68,7 @@ public class BookGenerateActivity extends ToolbarActivity implements View.OnClic
                     description = til_book_description.getEditText().getText().toString().trim();
 
                     //将description传到后端
-                    Toast.makeText(this, "Description Ok", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Description Ok", Toast.LENGTH_SHORT).show();
 
                     new Thread(new Runnable() {
                         @Override

@@ -96,7 +96,7 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.btn_login:
                 //登陆的处理
-                Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
 
                 //获得用户名和密码
                 userName = mTilName.getEditText().getText().toString().trim();
@@ -177,7 +177,7 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
                 break;
             case R.id.btn_register:
                 //跳转到注册界面
-                Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
 
                 //跳转等待结果
                 Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);

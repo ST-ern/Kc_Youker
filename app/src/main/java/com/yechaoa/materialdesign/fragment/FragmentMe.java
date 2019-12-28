@@ -34,7 +34,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class FragmentMe extends Fragment implements View.OnClickListener{
+public class FragmentMe extends MyFragment implements View.OnClickListener{
 
     private LinearLayout llHead;
     private RelativeLayout rlBookCollection, rlSetting;
@@ -166,5 +166,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener{
         }
 
     }
+
+    @Override public void refresh() {}
 
 }
