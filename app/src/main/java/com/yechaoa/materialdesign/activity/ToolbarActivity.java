@@ -66,7 +66,7 @@ public abstract class ToolbarActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menu_settings:
-                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

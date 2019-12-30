@@ -138,7 +138,7 @@ public class MainActivity extends ToolbarActivity {
         if (data!=null && requestCode==1){
             userName = data.getStringExtra("userName");
             //if (!TextUtils.isEmpty(userName)){
-            Toast.makeText(MainActivity.this,"登陆成功："+ userName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,"Login："+ userName, Toast.LENGTH_SHORT).show();
 
             if(userName==null){
                 //跳转到登陆界面

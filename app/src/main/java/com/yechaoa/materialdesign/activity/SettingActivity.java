@@ -55,7 +55,7 @@ public class SettingActivity extends ToolbarActivity implements View.OnClickList
                 break;
             case R.id.rl_modify_description:
                 //Modify description
-                Toast.makeText(this,"修改简介",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Modify Description",Toast.LENGTH_SHORT).show();
                 Intent anotherIntent=new Intent(SettingActivity.this,ModifyDescriptionActivity.class);
                 startActivity(anotherIntent);
                 break;

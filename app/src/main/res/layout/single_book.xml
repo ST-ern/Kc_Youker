@@ -43,7 +43,7 @@
                 android:minHeight="40dp"
                 android:layout_weight="50"
                 android:gravity="center"
-                android:text="@string/card_view"
+                android:text="Book"
                 android:textSize="18sp"
                 android:textColor="@color/text_white"/>
 
