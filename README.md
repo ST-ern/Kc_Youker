@@ -24,7 +24,7 @@ Main Page includes three fragments: Translate Fragment, Home Fragment and User F
 
 <img src="imgs/main.png" style="zoom:150%;" />
 
-#####Search Page
+##### Search Page
 
 ![](imgs/search.png)
 
@@ -36,16 +36,14 @@ Main Page includes three fragments: Translate Fragment, Home Fragment and User F
 
 ![](imgs/bookCollection.png)
 
-#####Book(Bag) Page
+##### Book(Bag) Page
 
 ![](imgs/book.png)
 
-#####Card Page
+##### Card Page
 
 ![](imgs/card.png)
 
 
 
 Hope this may help.(probably not I think :)
-
-##### 
