@@ -1,5 +1,8 @@
 # Readme
- <img src="imgs/sTern_dark.png" style="zoom:20%;" />
+
+stern
+
+
 
 The frontend part of our Software Engineering homework.(?)
 
