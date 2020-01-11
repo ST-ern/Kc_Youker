@@ -1,5 +1,5 @@
 # Readme
- <img src="/Users/sTern/Downloads/Adobe/sign/sTern_dark.png" style="zoom:20%;" />
+ <img src="imgs/sTern_dark.png" style="zoom:20%;" />
 
 The frontend part of our Software Engineering homework.(?)
 
@@ -9,37 +9,37 @@ It looks like this:
 
 ##### Splash Page
 
-<img src="UIDesign/splash.png" style="zoom:150%;" />
+<img src="imgs/splash.png" style="zoom:150%;" />
 
 ##### Register & Login Page
 
-![](UIDesign/register_login.png)
+![](imgs/register_login.png)
 
 ##### Main Page
 
 Main Page includes three fragments: Translate Fragment, Home Fragment and User Fragment.
 
-<img src="UIDesign/main.png" style="zoom:150%;" />
+<img src="imgs/main.png" style="zoom:150%;" />
 
 #####Search Page
 
-![](UIDesign/search.png)
+![](imgs/search.png)
 
 ##### UserInfo Setting Page
 
-![](UIDesign/setting.png)
+![](imgs/setting.png)
 
 ##### Book(Bag) Collection Page
 
-![](UIDesign/bookCollection.png)
+![](imgs/bookCollection.png)
 
 #####Book(Bag) Page
 
-![](UIDesign/book.png)
+![](imgs/book.png)
 
 #####Card Page
 
-![](UIDesign/card.png)
+![](imgs/card.png)
 
 
 
