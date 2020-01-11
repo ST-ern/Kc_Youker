@@ -1,35 +1,48 @@
-# MaterialDesign
+# Readme
+ <img src="/Users/sTern/Downloads/Adobe/sign/sTern_dark.png" style="zoom:20%;" />
 
-![](https://github.com/yechaoa/MaterialDesign/raw/master/gif/scrolling.gif)
-![](https://github.com/yechaoa/MaterialDesign/raw/master/gif/scrolling_tab.gif)
-![](https://github.com/yechaoa/MaterialDesign/raw/master/gif/tab.gif)
-![](https://github.com/yechaoa/MaterialDesign/raw/master/gif/navigation.gif)
-![](https://github.com/yechaoa/MaterialDesign/raw/master/gif/snackbar.gif)
-![](https://github.com/yechaoa/MaterialDesign/raw/master/gif/text.gif)
-![](https://github.com/yechaoa/MaterialDesign/raw/master/gif/swipe.gif)
-![](https://github.com/yechaoa/MaterialDesign/raw/master/gif/search_view.gif)
-![](https://github.com/yechaoa/MaterialDesign/raw/master/gif/drawer.gif)
+The frontend part of our Software Engineering homework.(?)
 
-* ConstraintLayout
-* CoordinatorLayout
-* CollapsingToolbarLayout
-* NestedScrollView
-* AppBarLayout
-* Toolbar
-* FloatingActionButton
-* TabLayout
-* BottomNavigationView
-* CardView
-* Snackbar
-* SwipeRefreshLayout
-* TextInputLayout
-* TextInputEditText
-* SearchView
-* NavigationView
-* DrawerLayout
+Completely a rookie to Android, mainly using the ViewPager template to modify. Complete some basic problems such as register and login, left-right switching, and jumps. By the way, the refresh function is poorly implemented.
 
-<br>
+It looks like this:
 
-#### 博客文档：http://blog.csdn.net/yechaoa/article/category/7228044
+##### Splash Page
+
+<img src="UIDesign/splash.png" style="zoom:150%;" />
+
+##### Register & Login Page
+
+![](UIDesign/register_login.png)
+
+##### Main Page
+
+Main Page includes three fragments: Translate Fragment, Home Fragment and User Fragment.
+
+<img src="UIDesign/main.png" style="zoom:150%;" />
+
+#####Search Page
+
+![](UIDesign/search.png)
+
+##### UserInfo Setting Page
+
+![](UIDesign/setting.png)
+
+##### Book(Bag) Collection Page
+
+![](UIDesign/bookCollection.png)
+
+#####Book(Bag) Page
+
+![](UIDesign/book.png)
+
+#####Card Page
+
+![](UIDesign/card.png)
 
 
+
+Hope this may help.(probably not I think :)
+
+##### 
