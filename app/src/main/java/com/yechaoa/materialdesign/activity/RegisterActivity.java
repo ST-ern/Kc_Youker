@@ -76,7 +76,7 @@ public class RegisterActivity extends ToolbarActivity implements View.OnClickLis
         @Override
         public void afterTextChanged(Editable editable) {
             if (mTilName_register.getEditText().getText().length() > mTilName_register.getCounterMaxLength())
-                mTilName_register.setError("输入内容超过上限");
+                mTilName_register.setError("Too Much Input.");
             else
                 mTilName_register.setError(null);
         }

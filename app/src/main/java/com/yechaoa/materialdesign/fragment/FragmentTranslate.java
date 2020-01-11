@@ -189,7 +189,9 @@ public class FragmentTranslate extends MyFragment {
 
         btn_copy_result.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
+
                 copyText(translate_result);
+                Toast.makeText(getActivity(), "copy!", Toast.LENGTH_SHORT).show();
 //                et_translate.setText("");
             }
         });

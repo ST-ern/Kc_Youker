@@ -84,7 +84,7 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
         @Override
         public void afterTextChanged(Editable editable) {
             if (mTilName.getEditText().getText().length() > mTilName.getCounterMaxLength())
-                mTilName.setError("输入内容超过上限");
+                mTilName.setError("To Mush Input!");
             else
                 mTilName.setError(null);
         }
@@ -108,7 +108,10 @@ public class LoginActivity extends ToolbarActivity implements View.OnClickListen
                 }else if(TextUtils.isEmpty(psw)){
                     Toast.makeText(LoginActivity.this, "Please enter password.", Toast.LENGTH_SHORT).show();
                     return;
-                }else {
+                }else if(psw.length()>20) {
+                    Toast.makeText(LoginActivity.this, "Password too long.", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {

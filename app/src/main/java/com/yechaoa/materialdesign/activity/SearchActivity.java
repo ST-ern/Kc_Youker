@@ -97,7 +97,7 @@ public class SearchActivity extends ToolbarActivity {
         mSearchView.setFocusable(true);
         mSearchView.requestFocusFromTouch();
         //设置提示词
-        mSearchView.setQueryHint("请输入关键字");
+        mSearchView.setQueryHint("Input key words.");
         //设置输入框文字颜色
         EditText editText = (EditText) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         editText.setHintTextColor(ContextCompat.getColor(this, R.color.white));
@@ -110,7 +110,7 @@ public class SearchActivity extends ToolbarActivity {
             // 当点击搜索按钮时触发该方法
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Snackbar.make(mConstraintLayout, "搜索内容===" + query, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mConstraintLayout, "Search : " + query, Snackbar.LENGTH_SHORT).show();
 
                 final String search = query;
                 //伪搜索
